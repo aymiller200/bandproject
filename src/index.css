@@ -1,1 +1,36 @@
+:root{
+  --clr--primary: #377771;
+  --clr--secondary: #ED6A5E;
+  --clr--secondary--fade: #ed6a5e45;
+  --clr--tertiary: ;
+  --clr--main--white: #fff;
+  --clr--main--black: #000;
+  --box--shadow: 2px 2px 8px;
+  --fnt--weight--thick: 700;
+  --fnt--weight--medium: 500;
+  --fnt--weight--thin: 300;
+}
 
+* {
+  box-sizing: border-box;
+  margin: 0; 
+  padding: 0;
+}
+
+body{
+  font-size: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+li{
+  list-style-type: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+::placeholder{
+  font-size:18px;
+  letter-spacing: 1px;
+ }
