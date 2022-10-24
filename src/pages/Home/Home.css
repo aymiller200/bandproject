@@ -28,8 +28,9 @@
   border-radius: 20px;
   justify-content: center;
   font-size: 15rem;
-  color: var(--clr--primary);
+
 }
+
 
 .category--item:hover{
   cursor: pointer;
@@ -44,7 +45,6 @@
  }
 
  .add-category--button{
-
   font-size: 5rem;
   grid-area: b;
   display: flex;
