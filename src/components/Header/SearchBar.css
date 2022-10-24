@@ -26,8 +26,9 @@
   }
 input {
   height: 45px;
-  min-width: 500px;
+  width: 500px;
   border-radius: 50px;
+  font-size: 15px;
   border: 3px solid var(--clr--secondary--fade);
 }
 
@@ -40,5 +41,22 @@ input {
 @media(max-width: 750px){
   input{
     width: 300px;
+    height:60px;
+    font-size: 25px;
   }
+
+  .header--icon{
+    font-size: 30px;
+  }
+
+  .header > .header--icon{
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+  ::placeholder{
+    font-size: 25px;
+    top:15px;
+    }
 }

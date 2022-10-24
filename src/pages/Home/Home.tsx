@@ -12,15 +12,19 @@ const Home = () => {
       <ul className='home--category-list'>
         <li className='category--item category--people'>
           <RiContactsBookFill />
+          <h5>People</h5>
         </li>
         <li className='category--item category--places'>
           <RiRoadMapFill />
+          <h5>Places</h5>
         </li>
         <li className='category--item category--calendar'>
           <RiCalendarFill />
+          <h5>Dates</h5>
         </li>
         <li className='category--item category--notes'>
           <RiStickyNoteFill />
+          <h5>Notes</h5>
         </li>
       </ul>
         <div className='add-category--button'>
