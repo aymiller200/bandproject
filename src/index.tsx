@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './index.css';
 import App from './App';
 import ReactDOM from 'react-dom';
@@ -8,14 +8,18 @@ import People from './pages/People/People';
 import Places from './pages/Places/Places';
 import Dates from './pages/Dates/Dates'
 import Notes from './pages/Notes/Notes'
-
+import SideBar from './components/SideBar/SideBar';
+import {SideBarContextProvider} from './contexts/SideBarContext'
 
 ReactDOM.render(
   <React.StrictMode>
-     <SearchBar />
+    <SideBarContextProvider>
+      <SideBar />
+    </SideBarContextProvider>
+    <SearchBar />
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}/>
+      <Routes> 
+        <Route index element={<App />}/>
         <Route path="/people" element={<People/>}/>
         <Route path="/places" element={<Places/>}/>
         <Route path="/dates" element={<Dates />}/>
