@@ -1,26 +1,26 @@
-import React, { useState } from "react"
-import  SideBar from "../components/SideBar/SideBar"
+import React, { useRef, useState } from "react"
 
- interface ISideBarContext {
+interface ISideBarContext {
   children?: React.ReactNode
   isSideBarOpen?: boolean
   toggleSideBar?: () => void
 }
 
 const defaultState = {
-  children: <SideBar />,
   isSideBarOpen: false
 }
 
 export const SideBarContext = React.createContext<ISideBarContext>(defaultState)
 
-export const SideBarContextProvider = ({children}: ISideBarContext) => {
-const [sideBarToggler, setSideBarToggler] = useState(defaultState.isSideBarOpen) 
+export const SideBarContextProvider = ({ children }: ISideBarContext) => {
+  const [sideBarToggler, setSideBarToggler] = useState(defaultState.isSideBarOpen)
+  const ref = useRef(sideBarToggler).current
 
   const toggleSideBar = () => {
-    setSideBarToggler(!sideBarToggler)
+    setSideBarToggler(true)
   }
 
-
-      return <SideBarContext.Provider value={{toggleSideBar}}>{children}</SideBarContext.Provider>
+  return(
+  <SideBarContext.Provider value={{ isSideBarOpen: sideBarToggler, toggleSideBar: toggleSideBar }}>{children}</SideBarContext.Provider>
+  )
 }

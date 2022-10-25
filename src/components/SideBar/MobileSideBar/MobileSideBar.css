@@ -1,0 +1,26 @@
+.mobile-sidebar--container{
+  position: absolute;
+  display: block;
+  height: 100vh;
+  background-color:var(--clr--tertiary);
+}
+
+.mobile-sidebar--list{
+position: relative;
+}
+
+.mobile-sidebar--list li{
+font-size: 3rem;
+padding: 10px 15px;
+color: var(--clr--tertiary--fade);
+}
+
+.mobile-sidebar--list li:hover{
+cursor: pointer
+}
+
+.mobile-sidebar--home--partician{
+width:80%;
+margin: auto;
+border: .5px solid var(--clr--tertiary--fade);
+}

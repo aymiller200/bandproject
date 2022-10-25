@@ -1,1 +1,37 @@
+.mobile-side-bar--container{
+  position: absolute;
+  visibility: visible;
+  height: 100vh;   
+  opacity: 1;    
+  left: 0;
+  transition: all .5s;
+  z-index: 3;
+}
 
+.mobile-side-bar--container__hidden{
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  left: -100px;
+  transition: all .5s;
+  z-index: 3;
+}
+
+.backdrop{
+  position: absolute;
+  background-color: var(--clr--backdrop);
+  visibility: visible;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  opacity: 1;
+  transition: all .8s;
+}
+
+.backdrop__hidden{
+  position: absolute;
+  visibility: hidden;
+  z-index: 2;
+  opacity: 0;
+  transition: all .8s;
+}
