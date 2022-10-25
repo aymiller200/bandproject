@@ -2,13 +2,16 @@
   --clr--primary: #377771;
   --clr--secondary: #ED6A5E;
   --clr--secondary--fade: #ed6a5e45;
-  --clr--tertiary: ;
+  --clr--tertiary: #ff8e72;
+  --clr--tertiary--fade: #f8ded1;
   --clr--main--white: #fff;
   --clr--main--black: #000;
+  --clr--backdrop: #00000038;
   --box--shadow: 2px 2px 8px;
   --fnt--weight--thick: 700;
   --fnt--weight--medium: 500;
   --fnt--weight--thin: 300;
+
 }
 
 * {

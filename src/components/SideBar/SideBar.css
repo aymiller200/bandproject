@@ -1,0 +1,32 @@
+.sidebar--container{
+    position: absolute;
+    display: block;
+    height: 100vh;
+    background-color:var(--clr--tertiary);
+}
+
+.sidebar--list{
+  position: relative;
+}
+
+.sidebar--list li{
+  font-size: 3rem;
+  padding: 10px 15px;
+  color: var(--clr--tertiary--fade);
+}
+
+.sidebar--list li:hover{
+  cursor: pointer
+}
+
+.sidebar--home--partician{
+  width:80%;
+  margin: auto;
+  border: .5px solid var(--clr--tertiary--fade);
+}
+
+@media(max-width: 750px){
+  .sidebar--container{
+    display: none;
+  }
+}
