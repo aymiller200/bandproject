@@ -1,16 +1,15 @@
 import "./SearchBar.css"
-import { FC, useState } from "react";
-import {RiSearchEyeFill} from "react-icons/ri"
-import {GiHamburgerMenu} from "react-icons/gi"
-import SideBar from "../SideBar/SideBar";
-import MobileSideBar from "../SideBar/MobileSideBar";
+import { FC } from "react";
+import {RiSearchEyeFill} from "react-icons/ri";
+import {GiHamburgerMenu} from "react-icons/gi";
+
 
 interface ISearchBar {
-  toggleMobileSideBar: (toggled: boolean) => void
+  ToggleMobileSideBar: (toggled: boolean) => void
   isMobileSideBarOpen: boolean
 }
 
-const SearchBar:FC<ISearchBar> = ({toggleMobileSideBar, isMobileSideBarOpen}) => {
+const SearchBar:FC<ISearchBar> = ({ToggleMobileSideBar, isMobileSideBarOpen}) => {
 
 
   return(
@@ -21,7 +20,7 @@ const SearchBar:FC<ISearchBar> = ({toggleMobileSideBar, isMobileSideBarOpen}) =>
         </div>
       <input type='text' placeholder='Search'/>
       </div>
-      <div className='mobile-header--menu-icon' onClick={() => toggleMobileSideBar(!isMobileSideBarOpen)}>
+      <div className='mobile-header--menu-icon' onClick={() => ToggleMobileSideBar(!isMobileSideBarOpen)}>
       <GiHamburgerMenu />
       </div>
       
