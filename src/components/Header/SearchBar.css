@@ -42,10 +42,21 @@ input {
   display: none;
 }
 
+
+
 @media(max-width: 750px){
+  .header--container{
+    display: grid;
+    position: relative;
+    
+    grid-template-areas: "search search menu";
+    grid-template-rows: 110px 50px;
+    grid-template-columns: 100%;
+  }
 
   .header{
-    margin-left: 10px;
+    margin: auto;
+    grid-area: search;
   }
  
   input{
@@ -71,9 +82,26 @@ input {
 
     .mobile-header--menu-icon{
       display: block;
-      font-size: 35px;
-      padding: 0px 15px;
+      position: absolute;
+      right: 0;      
+      padding: 0 15px;
+      grid-area: menu;
+      font-size: 3rem;
       color: var(--clr--primary);
     }
 
-}
+
+  }
+  @media(max-width: 450px){
+    .header--container{
+     display: flex;
+      width: 100vw
+      /* justify-content: center; */
+    }
+    
+    .mobile-header--menu-icon{
+      display: flex;
+      justify-content: flex-end;
+      position:static;
+    }
+  }

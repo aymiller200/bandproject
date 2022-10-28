@@ -61,13 +61,13 @@
 @media(max-width: 750px){
   .home--category-list{
     padding: 20px;
-    grid-template-columns: repeat(1, minmax(max-content, 15%));
+    grid-template-columns: repeat(2, max-content);
     grid-template-rows: repeat(1, 1fr);
     gap: 1rem
    }
    
    .category--item{
-     font-size: 20rem
+     font-size: 12rem
    }
 
    .category--item h5{
@@ -78,13 +78,26 @@
    .add-category--button{
     position: fixed;
     display: flex;
-
     top: 110px;
-    right: 10%;
+    right: 2%;
     margin-left: 0;
   
     font-size: 50px;
    }
+}
+
+@media(max-width: 450px){
+  .home--category-list{
+    grid-template-columns: repeat(1, max-content);
+  }
+
+  .category--item{
+    font-size: 20rem
+  }
+
+  .add-category--button{
+    right:4%
+  }
 }
 
 @media(min-width: 1024px){ 
