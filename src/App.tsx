@@ -22,13 +22,11 @@ function App() {
 
   const ToggleMobileSideBar = (toggled: boolean) => {
     setIsMobileSideBarOpen(toggled)
-    console.log(toggled)
   }
 
   const UpdateToken = (newToken:string) => {
     localStorage.setItem('token', newToken)
     setToken(newToken)
-    console.log(token)
   }
 
   const Logout = () => {
