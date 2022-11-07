@@ -23,9 +23,7 @@ const Login = () => {
       })
       const data: AuthUser = await res.json()
       if (data) {
-        console.log("data exist");
         SetUser(data)
-
         setIsError(false)
         setLoginToken(data.token)
         setPassword(data.user.password)
