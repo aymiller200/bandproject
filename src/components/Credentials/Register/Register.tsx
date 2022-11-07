@@ -1,13 +1,7 @@
-import React, { FC, useState } from "react"
-import { User } from "../../../helpers/User"
+import React, { useContext, useState } from "react"
+import { AuthUser, UserContext } from "../../../contexts/UserContext"
 
-interface IRegister {
-  UpdateToken: (newToken: string) => void
-  Logout: () => void
-}
-
-
-const Register: FC<IRegister> = ({ UpdateToken, Logout }) => {
+const Register = () => {
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -15,6 +9,7 @@ const Register: FC<IRegister> = ({ UpdateToken, Logout }) => {
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState(false)
   const [emailError, setEmailError] = useState(false)
+  const userContext = useContext(UserContext)
 
   const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm
   const regexEmail = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi
@@ -35,13 +30,12 @@ const Register: FC<IRegister> = ({ UpdateToken, Logout }) => {
           password: password
         }),
       })
-      const data: User = await res.json()
-
-      setFirstName(data.firstName)
-      setLastName(data.lastName)
-      setEmail(data.email)
-      setPassword(data.password)
-      UpdateToken(data.token)
+      const data: AuthUser = await res.json()
+      SetUser(data)
+      setFirstName(data.user.firstName)
+      setLastName(data.user.lastName)
+      setEmail(data.user.email)
+      setPassword(data.user.password)
 
       console.log(data)
 
@@ -54,6 +48,21 @@ const Register: FC<IRegister> = ({ UpdateToken, Logout }) => {
     }
 
   }
+
+  const SetUser = (data: AuthUser) => {
+    // add . user to fix response type
+    userContext.setUser({
+      user: {
+        firstName: data.user.firstName,
+        lastName: data.user.lastName,
+        email: data.user.email,
+        password: data.user.password,
+      },
+      token: data.token
+    })
+    userContext.setToken(data.token)
+    userContext.UpdateToken(data.token)
+  } 
 
   return (
     <div>

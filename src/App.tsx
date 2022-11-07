@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext, UserContextProvider } from "./contexts/UserContext";
 import Home from "./pages/Home/Home";
 import SearchBar from "./components/Header/SearchBar";
 import People from "./pages/People/People";
@@ -14,7 +15,7 @@ import Landing from "./pages/Landing/Landing";
 function App() {
   const [sideBarToggler, setSideBarToggler] = useState(false)
   const [isMobileSideBarOpen, setIsMobileSideBarOpen] = useState(false);
-  const [token, setToken] = useState('')
+  const userContext = useContext(UserContext);
 
   const ToggleSideBar = (toggled: boolean) => {
     setSideBarToggler(toggled)
@@ -23,46 +24,37 @@ function App() {
   const ToggleMobileSideBar = (toggled: boolean) => {
     setIsMobileSideBarOpen(toggled)
   }
-
-  const UpdateToken = (newToken:string) => {
-    localStorage.setItem('token', newToken)
-    setToken(newToken)
-  }
-
-  const Logout = () => {
-    localStorage.clear()
-    setToken('')
-  }
-
   return (
     <div className="App">
+        {!userContext.token ?
+          <BrowserRouter>
+            <Routes>
+              <Route index element={<Landing />} />
+            </Routes>
+          </BrowserRouter> :
+          <>
+            {sideBarToggler ? <SideBar /> : null}
+            <div className={isMobileSideBarOpen ? 'mobile-side-bar--container' : 'mobile-side-bar--container__hidden'}>
+              <MobileSideBar />
+            </div>
+            <div className={isMobileSideBarOpen ? 'backdrop' : 'backdrop__hidden'} onClick={() => ToggleMobileSideBar(false)}></div>
 
-    { !localStorage.getItem('token') ?
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<Landing UpdateToken={UpdateToken} Logout={Logout}/>} />
-      </Routes>
-    </BrowserRouter> :
-        <>
-        {sideBarToggler ? <SideBar /> : null}
-      <div className={isMobileSideBarOpen ? 'mobile-side-bar--container' : 'mobile-side-bar--container__hidden'}>
-        <MobileSideBar />
-      </div>
-      <div className={isMobileSideBarOpen ? 'backdrop' : 'backdrop__hidden'} onClick={() => ToggleMobileSideBar(false)}></div>
-      <SearchBar ToggleMobileSideBar={ToggleMobileSideBar} isMobileSideBarOpen={isMobileSideBarOpen} />
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Home ToggleSideBar={ToggleSideBar} />} />
-          <Route path="/people" element={<People />} />
-          <Route path="/places" element={<Places />} />
-          <Route path="/dates" element={<Dates />} />
-          <Route path="/notes" element={<Notes />} />
-        </Routes>
-      </BrowserRouter>
-      </>
-      
-    }
-      </div>
+            <SearchBar ToggleMobileSideBar={ToggleMobileSideBar} isMobileSideBarOpen={isMobileSideBarOpen} />
+            <BrowserRouter>
+              <Routes>
+                <Route index element={<Home ToggleSideBar={ToggleSideBar} />} />
+                <Route path="/people" element={<People />} />
+                <Route path="/places" element={<Places />} />
+                <Route path="/dates" element={<Dates />} />
+                <Route path="/notes" element={<Notes />} />
+              </Routes>
+            </BrowserRouter>
+          </>
+
+        }
+    
+
+    </div>
 
   );
 }

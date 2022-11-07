@@ -1,16 +1,18 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import Credentials from "../../components/Credentials/Credentials";
+import { UserContext } from "../../contexts/UserContext";
 
-interface ILanding{
-  UpdateToken:(newToken: string) => void
-  Logout: () => void
-}
+// interface ILanding{
+//   UpdateToken:(newToken: string) => void
+//   Logout: () => void
+// }
 
-const Landing:FC<ILanding> = ({UpdateToken, Logout}) => {
-
-  return(
+const Landing = () => {
+  
+  
+  return (
     <div>
-      <Credentials UpdateToken={UpdateToken} Logout={Logout}/>
+   <Credentials />
     </div>
   )
 }

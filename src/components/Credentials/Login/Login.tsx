@@ -1,17 +1,14 @@
-import React, { FC, useState } from "react"
-import { User } from "../../../helpers/User"
+import React, { useState, useContext} from "react"
+import { AuthUser, UserContext } from "../../../contexts/UserContext"
 
-interface ILogin {
-  UpdateToken:(newToken: string) => void
-  Logout: () => void
-}
-
-const Login:FC<ILogin> = ({UpdateToken, Logout}) => {
+const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isError, setIsError] = useState(false)
-  
-  const HandleLogin = async(e: React.FormEvent) => {
+  const [loginToken, setLoginToken] = useState('')
+  const userContext = useContext(UserContext)
+
+  const HandleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
       const res = await fetch('http://localhost:5022/user/login', {
@@ -20,27 +17,48 @@ const Login:FC<ILogin> = ({UpdateToken, Logout}) => {
           'Content-Type': 'application/json',
         }),
         body: JSON.stringify({
-          email: email.toUpperCase(), 
+          email: email.toUpperCase(),
           password: password,
         })
       })
-      const data: User = await res.json()
-      if(data){
-        setEmail(data.email)
-        setPassword(data.password)
-        UpdateToken(data.token)
-        
+      const data: AuthUser = await res.json()
+      if (data) {
+        console.log("data exist");
+        SetUser(data)
+
+        setIsError(false)
+        setLoginToken(data.token)
+        setPassword(data.user.password)
+        setEmail(data.user.email) 
+       
+      } else {
+        console.log("no data ", res)
       }
-    } catch(error){
+    } catch (error) {
       setIsError(true)
     }
- 
   }
 
-  return(
+  const SetUser = (data: AuthUser) => {
+    // add . user to fix response type
+    userContext.setUser({
+      user: {
+        firstName: data.user.firstName,
+        lastName: data.user.lastName,
+        email: data.user.email,
+        password: data.user.password,
+      },
+      token: data.token
+    })
+    userContext.setToken(data.token)
+    userContext.UpdateToken(data.token)
+     
+  }
+
+  return (
     <form onSubmit={HandleLogin}>
-      <input value={email} onChange={(e) => setEmail(e.target.value)}/>
-      <input value={password} onChange={(e) => setPassword(e.target.value)}/>
+      <input value={email || ''} onChange={(e) => setEmail(e.target.value)} />
+      <input value={password || ''} onChange={(e) => setPassword(e.target.value)} />
       <button type="submit">Submit</button>
     </form>
   )
