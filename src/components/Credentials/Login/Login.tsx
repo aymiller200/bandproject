@@ -1,7 +1,12 @@
-import React, { useState, useContext} from "react"
+import React, { useState, useContext, FC} from "react"
 import { AuthUser, UserContext } from "../../../contexts/UserContext"
+import './Login.css'
 
-const Login = () => {
+interface ILogin{
+  isAUser: boolean
+}
+
+const Login: FC<ILogin> = ({isAUser}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isError, setIsError] = useState(false)
@@ -54,11 +59,14 @@ const Login = () => {
   }
 
   return (
-    <form onSubmit={HandleLogin}>
-      <input value={email || ''} onChange={(e) => setEmail(e.target.value)} />
-      <input value={password || ''} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit">Submit</button>
+   
+    <form className={isAUser ? 'login--form' : 'login--form__hidden'} onSubmit={HandleLogin}>
+      <input className='email' placeholder='Email Address' value={email || ''} onChange={(e) => setEmail(e.target.value)} />
+      <input className='password' placeholder='Password' type='password' value={password || ''} onChange={(e) => setPassword(e.target.value)} />
+      <button className='login--button' type="submit">Sign in</button>
     </form>
+   
+   
   )
 }
 

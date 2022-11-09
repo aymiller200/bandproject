@@ -24,12 +24,12 @@
     color: var(--clr--primary);
     font-size: 20px;
   }
-input {
+.header--search-bar {
   height: 45px;
   width: 500px;
   border-radius: 50px;
   font-size: 15px;
-  border: 3px solid var(--clr--secondary--fade);
+  border: 1px solid var(--clr--secondary--fade);
 }
 
 ::placeholder {
@@ -42,13 +42,10 @@ input {
   display: none;
 }
 
-
-
 @media(max-width: 750px){
   .header--container{
     display: grid;
     position: relative;
-    
     grid-template-areas: "search search menu";
     grid-template-rows: 110px 50px;
     grid-template-columns: 100%;

@@ -1,19 +1,14 @@
-import { FC, useContext } from "react";
+import "./Landing.css"
 import Credentials from "../../components/Credentials/Credentials";
-import { UserContext } from "../../contexts/UserContext";
-
-// interface ILanding{
-//   UpdateToken:(newToken: string) => void
-//   Logout: () => void
-// }
 
 const Landing = () => {
   
   
   return (
-    <div>
-   <Credentials />
-    </div>
+  <div className="credentials--container">
+    <Credentials />
+  </div>
+    
   )
 }
 

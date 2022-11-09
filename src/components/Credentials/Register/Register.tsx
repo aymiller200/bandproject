@@ -1,7 +1,13 @@
-import React, { useContext, useState } from "react"
+import './Register.css'
+
+import React, { FC, useContext, useState } from "react"
 import { AuthUser, UserContext } from "../../../contexts/UserContext"
 
-const Register = () => {
+interface IRegister{
+  isAUser:boolean
+}
+
+const Register: FC<IRegister> = ({isAUser}) => {
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -65,16 +71,15 @@ const Register = () => {
   } 
 
   return (
-    <div>
-      <form onSubmit={HandleRegister}>
-      <input placeholder='first' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-      <input placeholder='last' value={lastName} onChange={(e) => setLastName(e.target.value)} />
-      <input placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit">Submit</button>
-      </form>
 
-    </div>
+      <form className={isAUser ? 'register--form__hidden' : 'register--form'} onSubmit={HandleRegister}>
+      <input className='first' placeholder='First Name' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+      <input className='last' placeholder='Last Name' value={lastName} onChange={(e) => setLastName(e.target.value)} />
+      <input className='email' placeholder='Email Address' value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input className='password' type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
+      <button className='register--button' type='submit'>Sign-up</button>
+      </form>
+   
   )
 }
 
