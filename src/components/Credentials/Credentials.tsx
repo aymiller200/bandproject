@@ -13,8 +13,6 @@ const Credentials = () => {
     setIsAUser(isSwitched)
   }
 
-
-
   return (
     <div className='credentials'>
       <h1>Band Plan </h1>
@@ -23,7 +21,10 @@ const Credentials = () => {
         <Login isAUser={isAUser}/> 
         <Register isAUser={isAUser}/>
   
-      {isAUser ? <p className='text'>Don't have an account? <span onClick={() => handleSwitch(false)}>Register here!</span></p> : <p className='text'>Already a user <span onClick={() => handleSwitch(true)}>sign-in here</span></p>}
+      {isAUser ? 
+       <p className='text'>Don't have an account? <span onClick={() => handleSwitch(false)}>Register here!</span></p> :
+       <p className='text'>Already a user <span onClick={() => handleSwitch(true)}>sign-in here</span></p>}
+       
       <div className='social--icons'>
         <div className='icon'>
           <FaGithub />
