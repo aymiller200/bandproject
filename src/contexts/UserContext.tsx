@@ -29,9 +29,6 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const existing: string = localStorage.getItem('token') || "";
   const [token, setToken] = useState(existing)
 
-  useEffect(() => { console.log("token change in context: ", token) }, [token]
-  )
-
   const UpdateToken = (newToken: string) => {
     localStorage.setItem('token', newToken)
   }

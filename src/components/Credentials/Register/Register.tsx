@@ -1,15 +1,22 @@
-import React, { useContext, useState } from "react"
-import { AuthUser, UserContext } from "../../../contexts/UserContext"
+import './Register.css'
 
-const Register = () => {
+import React, { FC, useContext, useState } from "react"
+import { AuthUser, UserContext } from "../../../contexts/UserContext"
+import { ErrorContext } from '../../../contexts/ErrorContext'
+import { Error } from '../../Error/Error'
+
+interface IRegister {
+  isAUser: boolean
+}
+
+const Register: FC<IRegister> = ({ isAUser }) => {
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [passwordError, setPasswordError] = useState(false)
-  const [emailError, setEmailError] = useState(false)
   const userContext = useContext(UserContext)
+  const errorContext = useContext(ErrorContext)
 
   const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm
   const regexEmail = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi
@@ -18,6 +25,7 @@ const Register = () => {
     e.preventDefault()
 
     if (password.match(regexPassword) && email.match(regexEmail)) {
+      errorContext.SetErrorObj(false, '')
       const res = await fetch('http://localHost:5022/user/register', {
         method: 'POST',
         headers: new Headers({
@@ -37,13 +45,14 @@ const Register = () => {
       setEmail(data.user.email)
       setPassword(data.user.password)
 
-      console.log(data)
 
     } else {
       if (!password.match(regexPassword)) {
-        setPasswordError(true)
+        errorContext.SetErrorObj(true, "Password must be 8 characters long and include a capital letter, a number, and a symbol")
+        setPassword('')
       } else if (!email.match(regexEmail)) {
-        setEmailError(true)
+        errorContext.SetErrorObj(true, "Email must be in email format: example@email.com")
+        setEmail('')
       }
     }
 
@@ -51,30 +60,55 @@ const Register = () => {
 
   const SetUser = (data: AuthUser) => {
     // add . user to fix response type
-    userContext.setUser({
-      user: {
-        firstName: data.user.firstName,
-        lastName: data.user.lastName,
-        email: data.user.email,
-        password: data.user.password,
-      },
-      token: data.token
-    })
-    userContext.setToken(data.token)
-    userContext.UpdateToken(data.token)
-  } 
+    if(data){
+      userContext.setUser({
+        user: {
+          firstName: data.user.firstName,
+          lastName: data.user.lastName,
+          email: data.user.email,
+          password: data.user.password,
+        },
+        token: data.token
+      })
+      userContext.setToken(data.token)
+      userContext.UpdateToken(data.token)
+    }
+    else{
+      return
+    }
+  }
+
+  const SetFirst = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFirstName(e.target.value)
+     errorContext.SetErrorObj(false, '')
+  }
+
+  const SetLast = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(e.target.value)
+    errorContext.SetErrorObj(false, '')
+  }
+
+  const SetEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+    errorContext.SetErrorObj(false, '')
+  }
+
+  const SetPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
+    errorContext.SetErrorObj(false, '')
+  }
 
   return (
-    <div>
-      <form onSubmit={HandleRegister}>
-      <input placeholder='first' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-      <input placeholder='last' value={lastName} onChange={(e) => setLastName(e.target.value)} />
-      <input placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit">Submit</button>
-      </form>
 
-    </div>
+    <form className={isAUser ? 'register--form__hidden' : errorContext.error?.isError ? 'register--form__error' : 'register--form'} onSubmit={HandleRegister}>
+      <input className='first' type='text' placeholder='First Name' value={firstName} onChange={SetFirst} />
+      <input className='last' type='text' placeholder='Last Name' value={lastName} onChange={SetLast} />
+      <input className='email' placeholder='Email Address' value={email} onChange={SetEmail} />
+      <input className='password' type='password' placeholder='Password' value={password} onChange={SetPassword} />
+      <div className={errorContext.error?.isError ? 'error' : 'error__hidden'}><Error /></div>
+      <button className='register--button' type='submit'>Sign-up</button>
+    </form>
+
   )
 }
 

@@ -18,7 +18,7 @@ const SearchBar:FC<ISearchBar> = ({ToggleMobileSideBar, isMobileSideBarOpen}) =>
         <div className='header--icon'>
           <RiSearchEyeFill />
         </div>
-      <input type='text' placeholder='Search'/>
+      <input className='header--search-bar' type='text' placeholder='Search'/>
       </div>
       <div className='mobile-header--menu-icon' onClick={() => ToggleMobileSideBar(!isMobileSideBarOpen)}>
       <GiHamburgerMenu />

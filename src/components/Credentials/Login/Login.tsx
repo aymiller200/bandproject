@@ -1,12 +1,18 @@
-import React, { useState, useContext} from "react"
+import React, { useState, useContext, FC} from "react"
+import { ErrorContext } from "../../../contexts/ErrorContext"
 import { AuthUser, UserContext } from "../../../contexts/UserContext"
+import { Error } from "../../Error/Error"
+import './Login.css'
 
-const Login = () => {
+interface ILogin{
+  isAUser: boolean
+}
+
+const Login: FC<ILogin> = ({isAUser}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [isError, setIsError] = useState(false)
-  const [loginToken, setLoginToken] = useState('')
   const userContext = useContext(UserContext)
+  const errorContext = useContext(ErrorContext)
 
   const HandleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -23,17 +29,13 @@ const Login = () => {
       })
       const data: AuthUser = await res.json()
       if (data) {
+        errorContext.SetErrorObj(false, '')
         SetUser(data)
-        setIsError(false)
-        setLoginToken(data.token)
         setPassword(data.user.password)
         setEmail(data.user.email) 
-       
-      } else {
-        console.log("no data ", res)
       }
     } catch (error) {
-      setIsError(true)
+      errorContext.SetErrorObj(true, 'Oops! Wrong email and/or password!')
     }
   }
 
@@ -53,11 +55,22 @@ const Login = () => {
      
   }
 
+  const SetEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+    errorContext.SetErrorObj(false, '')
+  }
+
+  const SetPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
+    errorContext.SetErrorObj(false, '')
+  }
+
   return (
-    <form onSubmit={HandleLogin}>
-      <input value={email || ''} onChange={(e) => setEmail(e.target.value)} />
-      <input value={password || ''} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit">Submit</button>
+    <form className={!isAUser ? 'login--form__hidden' : errorContext.error?.isError ? 'login--form__error' : 'login--form'} onSubmit={HandleLogin}>
+      <input className='email' placeholder='Email Address' value={email || ''} onChange={SetEmail} />
+      <input className='password' placeholder='Password' type='password' value={password || ''} onChange={SetPassword} />
+      <div className={errorContext.error?.isError ? 'error' : 'error__hidden'}><Error /></div>
+      <button className='login--button' type="submit">Sign in</button>
     </form>
   )
 }
