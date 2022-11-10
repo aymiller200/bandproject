@@ -3,14 +3,17 @@ import "./Credentials.css"
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import Register from "./Register/Register";
 import Login from "./Login/Login";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ErrorContext } from "../../contexts/ErrorContext";
 
 
 const Credentials = () => {
   const [isAUser, setIsAUser] = useState(false)
+  const errorContext = useContext(ErrorContext)
 
   const handleSwitch = (isSwitched: boolean) => {
     setIsAUser(isSwitched)
+    errorContext.SetErrorObj(false, '')
   }
 
   return (

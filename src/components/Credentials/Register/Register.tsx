@@ -15,8 +15,6 @@ const Register: FC<IRegister> = ({ isAUser }) => {
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [passwordError, setPasswordError] = useState(false)
-  const [emailError, setEmailError] = useState(false)
   const userContext = useContext(UserContext)
   const errorContext = useContext(ErrorContext)
 
@@ -54,7 +52,6 @@ const Register: FC<IRegister> = ({ isAUser }) => {
         setPassword('')
       } else if (!email.match(regexEmail)) {
         errorContext.SetErrorObj(true, "Email must be in email format: example@email.com")
-        setEmailError(true)
         setEmail('')
       }
     }
@@ -81,30 +78,33 @@ const Register: FC<IRegister> = ({ isAUser }) => {
     }
   }
 
-  // const SetFirst = (e) => {
-  //     setFirstName(e.target.value)
-  //    errorContext.
-  // }
-
-  const SetLast = () => {
-    
+  const SetFirst = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFirstName(e.target.value)
+     errorContext.SetErrorObj(false, '')
   }
 
-  const SetEmail = () => {
-    
+  const SetLast = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(e.target.value)
+    errorContext.SetErrorObj(false, '')
   }
 
-  const SetPassword = () => {
-    
+  const SetEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+    errorContext.SetErrorObj(false, '')
+  }
+
+  const SetPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
+    errorContext.SetErrorObj(false, '')
   }
 
   return (
 
     <form className={isAUser ? 'register--form__hidden' : errorContext.error?.isError ? 'register--form__error' : 'register--form'} onSubmit={HandleRegister}>
-      <input className='first' type='text' placeholder='First Name' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-      <input className='last' type='text' placeholder='Last Name' value={lastName} onChange={(e) => setLastName(e.target.value)} />
-      <input className='email' placeholder='Email Address' value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input className='password' type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
+      <input className='first' type='text' placeholder='First Name' value={firstName} onChange={SetFirst} />
+      <input className='last' type='text' placeholder='Last Name' value={lastName} onChange={SetLast} />
+      <input className='email' placeholder='Email Address' value={email} onChange={SetEmail} />
+      <input className='password' type='password' placeholder='Password' value={password} onChange={SetPassword} />
       <div className={errorContext.error?.isError ? 'error' : 'error__hidden'}><Error /></div>
       <button className='register--button' type='submit'>Sign-up</button>
     </form>
